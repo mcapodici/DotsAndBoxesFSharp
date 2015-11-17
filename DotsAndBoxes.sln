@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotsAndBoxes", "DotsAndBoxes\DotsAndBoxes.fsproj", "{1EB0CCE6-5312-4B3B-BAB8-16D491098B63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotsAndBoxesApp", "DotsAndBoxesApp\DotsAndBoxesApp.csproj", "{27F9C5C5-703B-4BCC-82B5-9C2FF6379939}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EB0CCE6-5312-4B3B-BAB8-16D491098B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EB0CCE6-5312-4B3B-BAB8-16D491098B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EB0CCE6-5312-4B3B-BAB8-16D491098B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EB0CCE6-5312-4B3B-BAB8-16D491098B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F9C5C5-703B-4BCC-82B5-9C2FF6379939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F9C5C5-703B-4BCC-82B5-9C2FF6379939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F9C5C5-703B-4BCC-82B5-9C2FF6379939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F9C5C5-703B-4BCC-82B5-9C2FF6379939}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

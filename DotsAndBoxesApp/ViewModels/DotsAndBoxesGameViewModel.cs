@@ -75,7 +75,7 @@ namespace DotsAndBoxesApp.ViewModels
 			_currentGame = Game.makeMove(move, _currentGame);
 			PostMakeMoveOrNewGame();
 
-			if (!_isHumanMove)
+			if (!_isHumanMove && !Game.isFinished(_currentGame))
 			{
 				var UISyncContext = TaskScheduler.FromCurrentSynchronizationContext();
 				Task.Factory.StartNew(() =>

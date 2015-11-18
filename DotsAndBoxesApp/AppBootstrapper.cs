@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System.Windows;
 using DotsAndBoxesApp.ViewModels;
+using System.Collections.Generic;
 
 namespace DotsAndBoxesApp
 {
@@ -13,7 +14,10 @@ namespace DotsAndBoxesApp
 
 		protected override void OnStartup(object sender, StartupEventArgs e)
 		{
-			DisplayRootViewFor<DotsAndBoxesGameViewModel>();
+			DisplayRootViewFor<DotsAndBoxesGameViewModel>(new Dictionary<string, object>
+			{
+				{ "ResizeMode",ResizeMode.NoResize }
+			});
 		}
 	}
 }

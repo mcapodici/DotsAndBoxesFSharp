@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 using DotsAndBoxes;
 using Microsoft.FSharp.Collections;
@@ -8,11 +9,13 @@ namespace DotsAndBoxesApp.ViewModels
 {
 	class DotsAndBoxesGameViewModel : PropertyChangedBase
 	{
+		bool _isHumanMove = false;
+
 		public DotsAndBoxesGameViewModel()
 		{
-			_currentGame = new Types.Game(4, 4, FSharpList<Types.Move>.Empty);
-			_selectedPlayers = HUMAN_VS_CPU;
+			_selectedPlayer = HUMAN_VS_CPU;
 			_selectedSize = 4;
+			StartNewGame();
 		}
 
 		public DotsAndBoxesGameViewModel(Types.Game game)
@@ -66,17 +69,44 @@ namespace DotsAndBoxesApp.ViewModels
 				return Game.isFinished(_currentGame) ? "Game Over" : null;
 			}
 		}
-		
+
+		private void MakeMove(Types.Move move)
+		{
+			_currentGame = Game.makeMove(move, _currentGame);
+			PostMakeMoveOrNewGame();
+
+			if (!_isHumanMove)
+			{
+				var UISyncContext = TaskScheduler.FromCurrentSynchronizationContext();
+				Task.Factory.StartNew(() =>
+				{
+					return AI.computerMove(_currentGame);
+				}).ContinueWith(cpuMove =>
+				{
+					MakeMove(cpuMove.Result);
+				},
+				UISyncContext);
+			}
+		}
+
 		public void MakeMove(MoveViewModel moveVm)
 		{
-			if (!moveVm.IsPlayed)
+			if (_isHumanMove && !moveVm.IsPlayed)
 			{
-				_currentGame = DotsAndBoxes.Game.makeMove(moveVm.Move, _currentGame);
+				MakeMove(moveVm.Move);
 			}
+		}
+
+		public void PostMakeMoveOrNewGame()
+		{
 			NotifyOfPropertyChange(() => Moves);
 			NotifyOfPropertyChange(() => State);
 			NotifyOfPropertyChange(() => ScoreLine);
 			NotifyOfPropertyChange(() => GameOverMessage);
+
+			_isHumanMove = SelectedPlayer == HUMAN_VS_HUMAN ||
+				(SelectedPlayer == HUMAN_VS_CPU && State.currentPlayer.IsP1) ||
+				(SelectedPlayer == CPU_VS_HUMAN && State.currentPlayer.IsP2);
 		}
 
 		public BindableCollection<int> Size
@@ -110,14 +140,14 @@ namespace DotsAndBoxesApp.ViewModels
 			}
 		}
 
-		string _selectedPlayers;
-		public string SelectedPlayers
+		string _selectedPlayer;
+		public string SelectedPlayer
 		{
-			get { return _selectedPlayers; }
+			get { return _selectedPlayer; }
 			set
 			{
-				_selectedPlayers = value;
-				NotifyOfPropertyChange(() => SelectedPlayers);
+				_selectedPlayer = value;
+				NotifyOfPropertyChange(() => SelectedPlayer);
 			}
 		}
 
@@ -125,10 +155,7 @@ namespace DotsAndBoxesApp.ViewModels
 		{
 			_currentGame = new Types.Game(_selectedSize, _selectedSize, FSharpList<Types.Move>.Empty);
 
-			NotifyOfPropertyChange(() => Moves);
-			NotifyOfPropertyChange(() => State);
-			NotifyOfPropertyChange(() => ScoreLine);
-			NotifyOfPropertyChange(() => GameOverMessage);
+			PostMakeMoveOrNewGame();
 			NotifyOfPropertyChange(() => Dots);
 		}
 	}

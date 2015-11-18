@@ -106,8 +106,13 @@
 
         </Grid>
         <StackPanel Grid.Column="1" Margin="10 10">
-            <TextBlock Text="{Binding Path=State.currentPlayer, Converter={StaticResource CurrentPlayerConverter}}" />
-            <TextBlock Text="{Binding Path=ScoreLine}" />
+			<TextBlock Text="Size" />
+			<ComboBox x:Name="Size" />
+			<TextBlock Text="Players" />
+			<ComboBox x:Name="Players" />
+            <Button Margin="0 10" x:Name="StartNewGame">Start New Game</Button>
+            <TextBlock FontSize="20" Text="{Binding Path=State.currentPlayer, Converter={StaticResource CurrentPlayerConverter}}" />
+            <TextBlock FontSize="30" Text="{Binding Path=ScoreLine}" />
             <TextBlock Text="{Binding Path=GameOverMessage}" />
         </StackPanel>
     </Grid>

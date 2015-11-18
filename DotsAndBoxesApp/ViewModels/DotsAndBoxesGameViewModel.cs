@@ -11,6 +11,8 @@ namespace DotsAndBoxesApp.ViewModels
 		public DotsAndBoxesGameViewModel()
 		{
 			_currentGame = new Types.Game(4, 4, FSharpList<Types.Move>.Empty);
+			_selectedPlayers = HUMAN_VS_CPU;
+			_selectedSize = 4;
 		}
 
 		public DotsAndBoxesGameViewModel(Types.Game game)
@@ -71,10 +73,63 @@ namespace DotsAndBoxesApp.ViewModels
 			{
 				_currentGame = DotsAndBoxes.Game.makeMove(moveVm.Move, _currentGame);
 			}
-			NotifyOfPropertyChange("Moves");
-			NotifyOfPropertyChange("State");
-			NotifyOfPropertyChange("ScoreLine");
-			NotifyOfPropertyChange("GameOverMessage");
+			NotifyOfPropertyChange(() => Moves);
+			NotifyOfPropertyChange(() => State);
+			NotifyOfPropertyChange(() => ScoreLine);
+			NotifyOfPropertyChange(() => GameOverMessage);
+		}
+
+		public BindableCollection<int> Size
+		{
+			get
+			{
+				return new BindableCollection<int>(Enumerable.Range(3, 8));
+			}
+		}
+
+		int _selectedSize;
+		public int SelectedSize
+		{
+			get { return _selectedSize; }
+			set
+			{
+				_selectedSize = value;
+				NotifyOfPropertyChange(() => SelectedSize);
+			}
+		}
+
+		const string HUMAN_VS_HUMAN = "Human vs. Human";
+		const string HUMAN_VS_CPU = "Human vs. CPU";
+		const string CPU_VS_HUMAN = "CPU vs. Human";
+
+		public BindableCollection<string> Players
+		{
+			get
+			{
+				return new BindableCollection<string>(new[] { HUMAN_VS_HUMAN, HUMAN_VS_CPU, CPU_VS_HUMAN });
+			}
+		}
+
+		string _selectedPlayers;
+		public string SelectedPlayers
+		{
+			get { return _selectedPlayers; }
+			set
+			{
+				_selectedPlayers = value;
+				NotifyOfPropertyChange(() => SelectedPlayers);
+			}
+		}
+
+		public void StartNewGame()
+		{
+			_currentGame = new Types.Game(_selectedSize, _selectedSize, FSharpList<Types.Move>.Empty);
+
+			NotifyOfPropertyChange(() => Moves);
+			NotifyOfPropertyChange(() => State);
+			NotifyOfPropertyChange(() => ScoreLine);
+			NotifyOfPropertyChange(() => GameOverMessage);
+			NotifyOfPropertyChange(() => Dots);
 		}
 	}
 

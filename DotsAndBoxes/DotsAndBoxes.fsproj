@@ -43,6 +43,9 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monoid.fs" />
+    <Compile Include="State.fs" />
+    <Compile Include="Random.fs" />
     <Compile Include="Util.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />

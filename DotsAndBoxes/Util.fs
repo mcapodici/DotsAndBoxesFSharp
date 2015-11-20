@@ -23,3 +23,5 @@ module Seq =
    let loop2 xs ys f = Seq.map2 f xs ys
    let loop3 xs ys zs f = Seq.map3 f xs ys zs
    let loopInLoop xs ys f = Seq.concat (loop xs (fun x -> loop ys (fun y -> f x y)))
+
+

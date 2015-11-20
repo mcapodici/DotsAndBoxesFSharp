@@ -80,7 +80,7 @@ namespace DotsAndBoxesApp.ViewModels
 				var UISyncContext = TaskScheduler.FromCurrentSynchronizationContext();
 				Task.Factory.StartNew(() =>
 				{
-					return AI.computerMove(_currentGame);
+					return AI.runComputerMove(_currentGame);
 				}).ContinueWith(cpuMove =>
 				{
 					MakeMove(cpuMove.Result);

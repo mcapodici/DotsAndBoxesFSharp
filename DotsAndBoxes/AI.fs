@@ -3,8 +3,13 @@
     open DotsAndBoxes.Util
     open DotsAndBoxes.Types
     open DotsAndBoxes.Game
+    open DotsAndBoxes.Random
 
-    let computerMove (game : Game) : Move = 
-        let rnd = System.Random()
-        let possibleMoves = Seq.toList (Seq.except game.moveList (allMovesForGame game))
-        possibleMoves.Item(rnd.Next(Seq.length possibleMoves))
+    let computerMove game : Rand<Move> = 
+        let possibleMoves =
+            allMovesForGame game |> 
+            Seq.except game.moveList |> 
+            Seq.toList
+        Rand.ofList possibleMoves
+    
+    let runComputerMove game = computerMove game |> Rand.run
